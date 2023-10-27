@@ -29,4 +29,6 @@ const output = JSON.parse(solc.compile(JSON.stringify(input)));
 const contracts = output.contracts["Ecommerce.sol"];
 const contract=contracts['Ecommerce'];
 console.log(contract);
+console.log("------------------------------------------");
+console.log(JSON.stringify(contract.abi));
 module.exports= {"abi":contract.abi,"bytecode":contract.evm.bytecode.object};

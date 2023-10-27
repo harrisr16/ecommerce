@@ -39,7 +39,7 @@ contract Ecommerce {
         totalProducts += 1;
     }
 
-    function getProductList() public view returns(product[] memory){
+    function getProductList() public view returns (product[] memory) {
         return productList;
     }
 
@@ -73,6 +73,19 @@ contract Ecommerce {
         productList[id].noItem = productList[id].noItem + quant;
         revenue = revenue - cost;
         return (success, data);
+    }
+
+    function donate(int amount) public payable returns (bool, bytes memory) {
+        bool success;
+        bytes memory data;
+        require(msg.value > .01 ether);
+        (success, data) = owner.call{value: uint(amount)}("");
+        return (success, data);
+    }
+
+    function sendDonation(address payable custAddress) public payable{
+        require(msg.sender == owner, "you are not authorized");
+        custAddress.transfer(address(this).balance);
     }
 
     function changePrice(uint id, int price) public {
